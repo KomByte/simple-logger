@@ -13,6 +13,7 @@ return $config
         '@PSR12' => true,
         'array_syntax' => ['syntax' => 'short'],
         'concat_space' => ['spacing' => 'one'],
+        'declare_strict_types' => true,
         'single_import_per_statement' => false,
         'single_blank_line_at_eof' => true,
         'blank_lines_before_namespace' => true,
