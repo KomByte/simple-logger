@@ -1,5 +1,5 @@
 {
-    "name": "mateodioev/simple-logger",
+    "name": "kombyte/simple-logger",
     "description": "Simple PSR logger for PHP",
     "type": "library",
     "keywords": ["psr", "logger", "async"],

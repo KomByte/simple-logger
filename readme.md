@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-composer require mateodioev/simple-logger
+composer require kombyte/simple-logger
 ```
 
 ## Usage
