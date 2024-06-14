@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace SimpleLogger;
 
@@ -41,11 +41,11 @@ class Logger extends AbstractLogger
     {
         $replace = [];
         foreach ($context as $key => $val) {
-            if (!is_array($val)) {
+            if (is_array($val)) {
                 continue;
             }
             if (is_scalar($val)) {
-                $replace['{' . $key . '}'] = $val;
+                $replace['{' . $key . '}'] = (string) $val;
                 continue;
             }
             if (is_object($val)) {
@@ -67,7 +67,7 @@ class Logger extends AbstractLogger
         }
 
         if (is_object($val)) {
-            return get_class($val);
+            return $val::class;
         }
 
         return '""';
