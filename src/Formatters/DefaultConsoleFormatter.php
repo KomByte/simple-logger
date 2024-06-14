@@ -63,7 +63,7 @@ class DefaultConsoleFormatter implements Formatter
     private function formatTraceException(Throwable $e, int $padding): string
     {
         $padding     = str_repeat(' ', $padding + 2);
-        $traceFormat = $padding . '#%d %s:%d %s';
+        $traceFormat = $padding . '#%d %s:%s %s';
         $i           = 0;
 
         $messages = array_map(function ($trace) use (&$i, $traceFormat): string {
@@ -71,8 +71,8 @@ class DefaultConsoleFormatter implements Formatter
             return PHP_EOL . sprintf(
                 $traceFormat,
                 $i,
-                $trace['file'],
-                $trace['line'],
+                $trace['file'] ?? '[internal function]',
+                (string) $trace['line'] ?? '',
                 $trace['function'],
             );
         }, $e->getTrace());
