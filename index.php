@@ -1,17 +1,27 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 use SimpleLogger\Logger;
 use SimpleLogger\streams\{CollectionStream, FileStream, StdoutStream};
 
 require __DIR__ . '/vendor/autoload.php';
 
-$logger = new Logger(stream: new CollectionStream([
+$logger = new Logger(stream: new CollectionStream(
     new StdoutStream(),
-    FileStream::async(__DIR__ . '/log.log'),
-]));
+    FileStream::today(__DIR__, async: false),
+));
 
-$logger->info('This is an info message', ['exception' => new Exception('This is an exception')]);
+// testing nested traces
+$a = function () use ($logger): void {
+    $b = fn () => $logger->info('This is an info message', ['exception' => new Exception('This is an exception')]);
+    $b();
+};
+$a();
+
 $logger->warning('This is a warning message');
-$logger->debug('This is a debug message with {msg}', ['msg' => 'parameters']);
+$logger->debug('This is a debug message with {msg} using {logger}', [
+    'msg' => 'parameters',
+    // The objects were represented by their class name
+    'logger' => $logger
+]);
