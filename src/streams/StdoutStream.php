@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleLogger\streams;
 
-use SimpleLogger\Formatters\{Formatter, PrettyConsoleFormatter};
+use SimpleLogger\Formatters\{DefaultConsoleFormatter, Formatter};
 
 /**
  * Write log messages to the standard output.
@@ -12,7 +12,7 @@ use SimpleLogger\Formatters\{Formatter, PrettyConsoleFormatter};
 class StdoutStream implements LogStream
 {
     public function __construct(
-        private Formatter $formatter = new PrettyConsoleFormatter(),
+        private Formatter $formatter = new DefaultConsoleFormatter(),
     ) {
     }
     public function write(LogResult $log): void

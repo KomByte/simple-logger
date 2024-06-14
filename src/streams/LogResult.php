@@ -6,8 +6,15 @@ namespace SimpleLogger\streams;
 
 use Throwable;
 
+use function time;
+
 final class LogResult
 {
+    /**
+     * @var int The timestamp of the log message
+     */
+    public int $timestamp;
+
     /**
      * @param string $level The log level
      * @param string $message The log message parsed by the logger
@@ -25,6 +32,8 @@ final class LogResult
         public string $level,
         public string $message,
         public ?Throwable $exception = null,
+        ?int $timestamp = null
     ) {
+        $this->timestamp = $timestamp ?? time();
     }
 }

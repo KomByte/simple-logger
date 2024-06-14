@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
+use SimpleLogger\Formatters\PrettyConsoleFormatter;
 use SimpleLogger\Logger;
 use SimpleLogger\streams\{CollectionStream, FileStream, StdoutStream};
 
 require __DIR__ . '/vendor/autoload.php';
 
 $logger = new Logger(stream: new CollectionStream(
-    new StdoutStream(),
+    new StdoutStream(formatter: new PrettyConsoleFormatter()),
     FileStream::today(__DIR__, async: false),
 ));
 

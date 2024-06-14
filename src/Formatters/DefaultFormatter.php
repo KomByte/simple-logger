@@ -22,7 +22,7 @@ final class DefaultFormatter implements Formatter
     {
         $message = sprintf(
             '[%s] [%s] %s' . PHP_EOL,
-            date('Y-m-d H:i:s'),
+            date('Y-m-d H:i:s', $result->timestamp),
             strtoupper($result->level),
             $result->message,
         );
