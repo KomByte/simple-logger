@@ -72,7 +72,7 @@ class DefaultConsoleFormatter implements Formatter
                 $traceFormat,
                 $i,
                 $trace['file'] ?? '[internal function]',
-                (string) $trace['line'] ?? '',
+                (string) ($trace['line'] ?? ''),
                 $trace['function'],
             );
         }, $e->getTrace());
