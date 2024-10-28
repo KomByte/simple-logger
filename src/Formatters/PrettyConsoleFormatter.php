@@ -40,7 +40,7 @@ class PrettyConsoleFormatter extends DefaultConsoleFormatter
     {
         static $supported = null;
         if ($supported === null) {
-            $supported = $this->consoleColor->are256ColorsSupported();
+            $supported = $this->consoleColor->isSupported();
             $this->defaultFormatter = $supported ? null : new DefaultFormatter();
         }
 
@@ -49,20 +49,15 @@ class PrettyConsoleFormatter extends DefaultConsoleFormatter
 
     public function format(LogResult $result): string
     {
-        // If colored output are not supported, use the default formatter
-        if ($this->isSupported() === false) {
-            return $this->defaultFormatter->format($result);
+        if ($this->isSupported()) {
+            return $this->formatWithStylesAndColors($result);
         }
 
-        // Format with bold and dark styles
-        if ($this->consoleColor->isSupported()) {
-            return $this->formatWithStyles($result);
-        }
-
-        return $this->formatOnlyWithColors($result);
+        // Fallback to default formatter
+        return $this->defaultFormatter->format($result);
     }
 
-    private function formatWithStyles(LogResult $result): string
+    private function formatWithStylesAndColors(LogResult $result): string
     {
         $color = $this->consoleColor;
         $currentDate = $this->getCurrentDate();
@@ -75,19 +70,6 @@ class PrettyConsoleFormatter extends DefaultConsoleFormatter
         );
 
         return $this->withExceptionMessage($result, $message, strlen($currentDate));
-    }
-
-    private function formatOnlyWithColors(LogResult $logResult): string
-    {
-        $currentDate = $this->getCurrentDate();
-        $message     = sprintf(
-            static::$format,
-            '[' . $currentDate . ']',
-            $this->colorizeLevel($logResult->level),
-            $logResult->message,
-        );
-
-        return $this->withExceptionMessage($logResult, $message, strlen($currentDate));
     }
 
     private function colorizeLevel(string $level): string
