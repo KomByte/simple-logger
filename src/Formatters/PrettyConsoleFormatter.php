@@ -22,7 +22,7 @@ class PrettyConsoleFormatter extends DefaultConsoleFormatter
     protected static $format = '%s %s %s' . PHP_EOL;
 
     private ConsoleColor $consoleColor;
-    private ?DefaultFormatter $defaultFormatter;
+    private ?DefaultFormatter $defaultFormatter = null;
 
     public function __construct()
     {
@@ -54,7 +54,7 @@ class PrettyConsoleFormatter extends DefaultConsoleFormatter
         }
 
         // Fallback to default formatter
-        return $this->defaultFormatter->format($result);
+        return $this->defaultFormatter?->format($result) ?? '';
     }
 
     private function formatWithStylesAndColors(LogResult $result): string
